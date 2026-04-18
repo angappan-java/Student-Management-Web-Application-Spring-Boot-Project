@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student SpringBoot Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+     <style>
+        body{
+            background-image:url("/images/img 2.webp");
+            background-size:cover;
+            background-repeat:norepeat;
+            background-attachment:fixed;
+        }
+        .center-content{
+           display:flex;
+           flex-direction:column;
+           justify-content:center;
+           align-items:center;
+           height:100%
+        }
+        .custom-button{
+           background-color:blue;
+           border:none;
+           padding:10px 20px;
+           color:white;
+           font-size:18px;
+           border-radius:5px;
+           text-decoration:none;
+           align-items:center;
+           margin:20px;
+        }
+        .custom-button:hover{
+           background-color:grey;
+        }
+     </style>
+  </head>
+  <body>
+    <div class="container my-4" >
+        <div class="row" >
+            <div class="col-md-8 mx-auto rounded border p-4" style="background-color:white">
+            <h2 class="text-center mb-3">Search Admin Id</h2>
+              <form  th:action="@{/search}" method="post">
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Admin Id</label>
+                <div class="col-sm-8">
+                    <input class="form-control" name="id" required >
+                 </div>
+               </div>
+                 <br>
+                 <div class="row">
+                    <div class="offset-sm-4 col-sm-8 d-grid" >
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <br>
+                            <div th:if="${notfound}">
+                                 <p th:text="${notfound}" style="color:red"></p>
+                            </div>
+                            <div th:if="${found}">
+                                 <p th:text="${found}" style="color:green"></p>
+                            </div>
+                            <div th:if="${msg}">
+                                   <p th:text="${msg}" style="color:green"></p>
+                            </div>
+                            <div th:if="${err}">
+                                   <p th:text="${err}" style="color:red"></p>
+                             </div>
+                    </div>
+                 </div>
+             
+            </form>
+            
+             
+             <br><br>
+             
+             <div th:if="${admin!=null}">
+                 <h2 class="text-center mb-3">Reset Admin</h2>
+                    <form th:action="@{/reset}" method="post">
+                        <div class="row mb-3">
+                             <label class="col-sm-4 col-form-label">Admin Id</label>
+                                 <div class="col-sm-8">
+                                      <input class="form-control" readonly="readonly" th:field="${admin.id}" name="id" >
+                                  </div>
+                          </div>
+               
+                          <div class="row mb-3">
+                               <label class="col-sm-4 col-form-label">User Name</label>
+                                     <div class="col-sm-8">
+                                           <input class="form-control" th:field="${admin.name}" name="name" required >
+                                       </div>
+                           </div>
+               
+                            <div class="row mb-3">
+                                   <label class="col-sm-4 col-form-label">Password</label>
+                                         <div class="col-sm-8">
+                                               <input class="form-control" th:field="${admin.pass}" name="pass" required >
+                                          </div>
+                            </div>
+                            <div class="row">
+                                 <div class="offset-sm-4 col-sm-8 d-grid" >
+                                     <button type="submit" class="btn btn-primary">Change Password</button>
+                                         <br>
+                                                
+                                 </div>
+                            </div>
+                    </form>
+                    
+             </div>
+             <div class="row">
+                     <div class="offset-sm-4 col-sm-4 d-grid" >
+                            <a th:href="@{/register}" class="btn btn-warning"> Go Register</a>
+                      </div>
+                      <div class=" col-sm-4 d-grid" >
+                            <a th:href="@{/}" class="btn btn-success">Back</a>
+                      </div>
+             </div> 
+        </div>
+      </div>
+    </div>     
+          
+    
+     
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>

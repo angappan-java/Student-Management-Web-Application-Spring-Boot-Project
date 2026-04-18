@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student SpringBoot Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+     
+     <script>
+          function previewImage(event){
+           var reader=new FileReader();
+           reader.onload=function(){
+                  var output=document.getElementById("imagePreview");
+                  output.src=reader.result;
+                  output.style.display='block';
+               };
+               reader.readAsDataURL(event.target.files[0]);
+          }
+     </script>
+     
+     
+     <style>
+        body{
+            background-image:url("/images/img 2.webp");
+            background-size:cover;
+            background-repeat:norepeat;
+            background-attachment:fixed;
+        }
+        .center-content{
+           display:flex;
+           flex-direction:column;
+           justify-content:center;
+           align-items:center;
+           height:100%
+        }
+        .custom-button{
+           background-color:blue;
+           border:none;
+           padding:10px 20px;
+           color:white;
+           font-size:18px;
+           border-radius:5px;
+           text-decoration:none;
+           align-items:center;
+           margin:20px;
+        }
+        .custom-button:hover{
+           background-color:grey;
+        }
+     </style>
+  </head>
+  <body>
+  
+  <div th:if="${msg}" class="alert alert-success alert-dismissible fade show" role="alert">
+       <span th:text="${msg}"></span>
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    <div th:if="${err}" class="alert alert-danger alert-dismissible fade show" role="alert">
+       <span th:text="${err}"></span>
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    
+    
+    <div class="container my-4" >
+        <div class="row" >
+            <div class="col-md-8 mx-auto rounded border p-4" style="background-color:white">
+            <h2 class="text-center mb-3">Add Student</h2>
+              <form th:action="@{/addstudent}" method="post" th:object="${student}" enctype="multipart/form-data">
+                 <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Student Id</label>
+                      <div class="col-sm-8">
+                            <input  type="text" class="form-control"  name="id" th:field="${student.id}"  >
+                               <p th:if="${#fields.hasErrors('id')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.id}"></p>
+                        </div>
+                  </div>
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Student Name</label>
+                      <div class="col-sm-8">
+                            <input type="text" class="form-control"  name="name"  th:field="${student.name}" >
+                               <p th:if="${#fields.hasErrors('name')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.name}"></p>
+                        </div>
+                  </div>
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Age</label>
+                      <div class="col-sm-8">
+                            <input  type="text" class="form-control"  name="age"  th:field="${student.age}" >
+                               <p th:if="${#fields.hasErrors('age')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.age}"></p>
+                        </div>
+                  </div>
+   
+                  
+   
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Gender</label>
+                      <div class="col-sm-8">
+                            <select  name="gender" class="form-select" th:field="${student.gender}">
+                                 <option value="">Select Gender</option>
+                                 <option value="male">Male</option>
+                                 <option value="female">Female</option>
+                                 <option value="others">Others</option>
+                             </select>
+                                  <p th:if="${#fields.hasErrors('gender')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.gender}"></p>
+                        </div>
+                  </div> 
+                  
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Date Of Birth</label>
+                      <div class="col-sm-8">
+                            <input type="date" class="form-control"  name="dob"  th:field="${student.dob}" >
+                               <p th:if="${#fields.hasErrors('dob')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.dob}"></p>
+                        </div>
+                  </div>
+                  
+                          
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Time</label>
+                      <div class="col-sm-8">
+                            <input type="text" class="form-control" name="time"  th:field="${student.time}" readonly>
+                       </div>
+                  </div>
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Image</label>
+                      <div class="col-sm-8">
+                            <input type="file" class="form-control" name="imagefile"  
+                                accept="image/*" onchange="previewImage(event)" required>
+                       </div>
+                  </div>
+                  
+                   <div class="row mb-3">
+                        <div class="offset-sm-4">
+                            <img id="imagePreview" style="display:none; width:150px;margin-top:10px">
+                        </div>
+                      
+                  </div>
+                   
+                   <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Course</label>
+                      <div class="col-sm-8">
+                            <select name="course.id" class="form-select" th:field="*{course.id}" >
+                               <option value="">Select Course</option>
+                               <option th:each="course : ${courses}" th:value="${course.id}"
+                                          th:text="${course.name}"></option>
+                            </select>
+                               <p th:if="${#fields.hasErrors('course.id')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${course.id}"></p>
+                        </div>
+                  </div>
+                  
+                   
+             
+                       
+              <div class="row">
+                    <div class="offset-sm-4 col-sm-8 d-grid" >
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div> 
+              </div><br><br>
+              <div class="row">
+                    <div class="offset-sm-4 col-sm-8 d-grid">
+                        <a class="btn btn-success" th:href="@{/editstudent}">Search Student</a>
+                    </div>
+              </div> 
+                 
+                             
+          </form>
+          
+         </div>
+                    
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>

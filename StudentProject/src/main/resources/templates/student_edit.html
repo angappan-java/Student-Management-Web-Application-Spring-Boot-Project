@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student SpringBoot Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <script>
+          function previewImage(event){
+           var reader=new FileReader();
+           reader.onload=function(){
+                  var output=document.getElementById("imagePreview");
+                  output.src=reader.result;
+                  output.style.display='block';
+               };
+               reader.readAsDataURL(event.target.files[0]);
+          }
+     </script>
+     
+     
+     
+     <style>
+        body{
+            background-image:url("/images/img 2.webp");
+            background-size:cover;
+            background-repeat:norepeat;
+            background-attachment:fixed;
+        }
+        .center-content{
+           display:flex;
+           flex-direction:column;
+           justify-content:center;
+           align-items:center;
+           height:100%
+        }
+        .custom-button{
+           background-color:blue;
+           border:none;
+           padding:10px 20px;
+           color:white;
+           font-size:18px;
+           border-radius:5px;
+           text-decoration:none;
+           align-items:center;
+           margin:20px;
+        }
+        .custom-button:hover{
+           background-color:grey;
+        }
+     </style>
+     
+    
+  </head>
+  <body>
+    <div class="container my-4" >
+        <div class="row" >
+            <div class="col-md-8 mx-auto rounded border p-4" style="background-color:white">
+            <h2 class="text-center mb-3">Search Student</h2>
+              <form  th:action="@{/searchstudent}">
+              <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Student Id</label>
+                <div class="col-sm-8">
+                    <input class="form-control" name="id" required >
+                 </div>
+               </div>
+                 <br>
+                 <div class="row">
+                    <div class="offset-sm-4 col-sm-8 d-grid" >
+                        <button type="submit" class="btn btn-primary">Search</button>
+                        <br>
+                            
+                            <div th:if="${msg}">
+                                   <p th:text="${msg}" style="color:green"></p>
+                            </div>
+                            <div th:if="${err}">
+                                   <p th:text="${err}" style="color:red"></p>
+                             </div>
+                    </div>
+                 </div>
+             
+            </form>
+            
+             
+             <br><br>
+                <div th:if="${student}" class="card mt-4">
+                    <div class="card-header bg-primary text-white">
+                       <h2>Student Detail</h2>
+                     </div>
+                     <div class="card-body">
+                       <div class="row">
+                         <div class="col-md-6">
+                            <p><strong>Id :</strong><span th:text="${student.id}"></span></p>
+                            <p><strong>Name :</strong><span th:text="${student.name}"></span></p>
+                            <p><strong>Age :</strong><span th:text="${student.age}"></span></p>
+                            <p><strong>Gender :</strong><span th:text="${student.gender}"></span></p>
+                            <p><strong>DOB :</strong><span th:text="${student.dob}"></span></p>
+                            <p><strong>Time :</strong><span th:text="${student.time}"></span></p>
+                            <p><strong>Course :</strong><span th:text="${student.course.name}"></span></p>                        
+                         </div>
+                          <div class="col-md-6 text-center">
+                             <img th:if="${student.image!=null}" th:src="@{'/images/' +${student.image}}" class="img-thumbnail" width="150">
+                          </div>
+                       </div>
+                     </div>
+               </div>
+                <br><br>
+                
+                
+                
+             <div th:if="${student!=null}">
+                 <h2 class="text-center mb-3">Student Edit</h2>
+                    <form th:action="@{/updatestudent}" th:object="${student}" method="post" enctype="multipart/form-data">
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Student Id</label>
+                      <div class="col-sm-8">
+                            <input   th:field="${student.id}" type="text" class="form-control" readonly   >
+                               <p th:if="${#fields.hasErrors('id')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.id}"></p>
+                        </div>
+                  </div>
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Student Name</label>
+                      <div class="col-sm-8">
+                            <input  th:field="${student.name}" type="text" class="form-control"     >
+                               <p th:if="${#fields.hasErrors('name')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.name}"></p>
+                        </div>
+                  </div>
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Age</label>
+                      <div class="col-sm-8">
+                            <input   th:field="${student.age}" type="text" class="form-control"  name="age"   >
+                               <p th:if="${#fields.hasErrors('age')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.age}"></p>
+                        </div>
+                  </div>
+   
+                  
+   
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Gender</label>
+                      <div class="col-sm-8">
+                            <select   th:field="${student.gender}" class="form-select"  >
+                                 <option value="">Select Gender</option>
+                                 <option value="male">Male</option>
+                                 <option value="female">Female</option>
+                                 <option value="others">Others</option>
+                             </select>
+                                  <p th:if="${#fields.hasErrors('gender')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.gender}"></p>
+                        </div>
+                  </div> 
+                  
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Date Of Birth</label>
+                      <div class="col-sm-8">
+                            <input th:field="${student.dob}" type="date" class="form-control" >
+                               <p th:if="${#fields.hasErrors('dob')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="${student.dob}"></p>
+                        </div>
+                  </div>
+                  
+                          
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Time</label>
+                      <div class="col-sm-8">
+                            <input th:field="${student.time}" type="text" class="form-control"   readonly>
+                       </div>
+                  </div>
+                  
+                  <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Image</label>
+                      <div class="col-sm-8">
+                            <input type="file" class="form-control" name="imagefile"  
+                                accept="image/*" onchange="previewImage(event)">
+                       </div>
+                  </div>
+                  
+                   <div class="row mb-3">
+                        <div class="offset-sm-4">
+                            <img id="imagePreview"  th:if="${student.image!=null}" 
+                                 th:src="@{/images/{img}(img=${student.image})}" alt="Student Image"
+                                 class="img-thumbnail"
+                             style="width:150px;margin-top:10px">
+                        </div>
+                      
+                  </div>
+                   
+                   <div class="row mb-3">
+                   <label class="col-sm-4 col-form-label fw-bold">Course</label>
+                      <div class="col-sm-8">
+                            <select  class="form-select" th:field="*{course.id}" >
+                               <option value="">Select Course</option>
+                               <option th:each="course : ${courses}" th:value="${course.id}"
+                                          th:text="${course.name}"></option>
+                            </select>
+                               <p th:if="${#fields.hasErrors('course.id')}"
+                                   th:errorClass="text-danger"
+                                   th:errors="*{course.id}"></p>
+                        </div>
+                  </div>
+                          <div class="row">
+                                 <div class="offset-sm-4 col-sm-8 d-grid" >
+                                     <button type="submit" class="btn btn-primary">Update Student</button>                                                                                        
+                                 </div>
+                                  
+                            </div>
+                    </form><br><br>
+                     <form th:action="@{/studentdelete}" method="post">
+                         <input type="hidden" name="id" th:value="${student.id}">
+                         <div class="offset-sm-4 col-sm-8 d-grid" >
+                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you Sure?')">Delete Student</button>                                                                                         
+                          </div>
+                    </form>  
+             </div><br>
+             <div class="row">
+                     
+                      <div class="offset-sm-4 col-sm-8 d-grid" >
+                            <a th:href="@{/student}" class="btn btn-success">Back</a>
+                      </div>
+             </div> 
+        </div>
+      </div>
+    </div>        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+</html>
