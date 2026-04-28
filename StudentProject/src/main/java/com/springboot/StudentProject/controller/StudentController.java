@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +43,12 @@ public class StudentController {
 	      
 	      
 	      
-	      
+	    @GetMapping("/student")
+	    public String getallStudent(Model model) {
+	    	List<Student> student=studentrepo.getallstudent();
+	    	model.addAttribute("studentdetails", student);
+	    	return "student";
+	    }
 	    @GetMapping("/addstudent")
 	    public String studentinsert(Model model) {
 	    	 
@@ -96,12 +103,9 @@ public class StudentController {
 	    	
 	    	
 	    }
-	    @GetMapping("/editstudent")
-	    public String editstudent() {
-	        return "student_edit";
-	    }
-	    @GetMapping("/searchstudent")
-	    public String searchstudent(@RequestParam("id") String id,Model model) {
+
+	    @GetMapping("/editstudent/{id}")
+	    public String searchstudent(@PathVariable("id") String id,Model model) {
 	    	
 	    	Student student=studentrepo.getbyid(id);
 	    	
@@ -150,8 +154,8 @@ public class StudentController {
     			return "student_edit";
 	    }
 	    
-	    @PostMapping("/studentdelete")
-	    public String deletestudent(@RequestParam("id") String id,
+	    @PostMapping("/studentdelete/{id}")
+	    public String deletestudent(@PathVariable("id") String id,
 	    		      Model model) {
 	    	try {
 	    		     studentrepo.deletebystudent(id);

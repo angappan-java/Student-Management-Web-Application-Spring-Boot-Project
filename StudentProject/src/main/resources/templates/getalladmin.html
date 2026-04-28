@@ -1,11 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
+         body::-webkit-scrollbar{
+            display: none;
+            overflow-x:hidden;
+            overflow-y:hidden;
+        }
          body{
             background-image:url("/images/img 2.webp");
             background-size:cover;
@@ -34,40 +39,47 @@
   <body>
     <div  class="hero-section">
        <div  class="hero-content">
-          <h2 class="display-3 fw-bold">All Admin</h2>
+          <h4 class="text-center text-success fw-bold">ALL ADMIN INFORMATION</h4>
+            <div class="text-center mx-auto">
+                 <div  th:if="${msg}" class="fw-bold alert alert-warning alert-dismissible fade show" role="alert">
+                       <p th:text="${msg}" class="text-primary text-center"></p>
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                 </div>
+                 <div  th:if="${err}" class="fw-bold alert alert-warning alert-dismissible fade show" role="alert">
+                       <p th:text="${err}" class="text-danger text-center"></p> 
+                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                 </div>      
+            </div>
             <table class="table table-bordered table-hover">
               <thead class="table-dark">
                  <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Password</th>
+                    <th>Email</th>
+                    <th>Action</th>
                     <th>Action</th>
                  </tr>
                </thead>
                <tbody>
-                   <tr th:each="user : ${admin}">
-                     <td th:text="${user.id}"></td>
-                     <td th:text="${user.name}"></td>
-                     <td th:text="${user.pass}"></td>
+                   <tr th:each="admin : ${admindetails}">
+                     <td th:text="${admin.id}"></td>
+                     <td th:text="${admin.name}"></td>
+                     <td th:text="${admin.email}"></td>
                      <td>
-                        <a th:href="@{/edit/{id}(id=${user.id})}" class="btn btn-primary">Edit</a>
-                        
-                         <a th:href="@{/delete/{id}(id=${user.id})}" onclick="return confirm('Are you Sure ?')"
-                          class="btn btn-danger">Delete</a>
+                        <a th:href="@{/edit/{id}(id=${admin.id})}" class="btn btn-primary fw-bold">Edit</a>
                      </td>
-                   
+                     <td>
+                         <a th:href="@{/delete/{id}(id=${admin.id})}" onclick="return confirm('Are you Sure ?')"
+                          class="btn btn-danger fw-bold">Delete</a>
+                     </td>
                    </tr>
                
                </tbody>
            </table>
-               <div th:if="${msg}">
-                  <p th:text="${msg}"></p>
-               </div>
-               <div th:if="${err}">
-                 <p th:text="${err}"></p>
-               </div>
             <div class="row">
-                <a th:href="@{/student}" class="offset-col-sm-4 btn btn-success" >Back</a>
+                <div class="offset-md-4 col-md-4 d-grid">
+                     <a th:href="@{/features}" class=" btn btn-success fw-bold" >Back</a>
+                </div>  
             </div>
        </div>
     </div>

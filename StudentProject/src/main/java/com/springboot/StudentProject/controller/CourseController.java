@@ -1,13 +1,15 @@
 package com.springboot.StudentProject.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.springboot.StudentProject.model.Course;
 import com.springboot.StudentProject.repository.CourseRepository;
@@ -19,6 +21,12 @@ public class CourseController {
         @Autowired
 	   private CourseRepository courserepo;
 	
+      @GetMapping("/course")
+      public String getCourse(Model model) {
+    	  List<Course> course=courserepo.getallacourse();
+    	  model.addAttribute("coursedetails", course);
+    	  return "course";
+      }
       @GetMapping("/addcourse")
       public String courseadd(Model model) {
     	  model.addAttribute("course",new Course());
@@ -40,13 +48,9 @@ public class CourseController {
     	 return "course_add";
       }
       
-      @GetMapping("/editcourse")
-      public String editcourse() {
-    	  return "course_edit";
-      }
       
-      @PostMapping("/searchcourse")
-      public String getcourseid(@RequestParam("id") String id,Model model) {
+      @GetMapping("/editcourse/{id}")
+      public String getcourseid(@PathVariable("id") String id,Model model) {
     	  
     	  Course course=courserepo.getbyid(id);
     	  if(course==null) {
@@ -68,8 +72,8 @@ public class CourseController {
     	  return "course_edit";
       }
       
-      @PostMapping("/delete")
-      public String deletecourse(@RequestParam("id") String id,Model model) {
+      @PostMapping("/delete/{id}")
+      public String deletecourse(@PathVariable("id") String id,Model model) {
     	  courserepo.deletebyid(id);
     	  model.addAttribute("msg", "This Course["+id+"] Is Deleted...");
     	  return "course_edit";
