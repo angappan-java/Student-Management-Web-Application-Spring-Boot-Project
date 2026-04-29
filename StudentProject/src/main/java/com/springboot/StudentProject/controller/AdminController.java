@@ -136,12 +136,12 @@ public class AdminController {
 		  try {
 			  Admin admindetails=adminrepo.findById(admin.getId()).orElseThrow(()->new RuntimeException("This Admin Id Is Not Found..."));
 			  String regexp="^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[~!@#$%^&*_=+-]).{8,}$";
-			  if(newpassword.isEmpty()) {
-				  admin.setPass(admindetails.getPass());
-				  adminrepo.save(admin);
+			  if(newpassword.isEmpty() || newpassword==null) {
+				  model.addAttribute("err","Please Enter Password Fields.");
+				  return "reset";
 			  }else {
 				  if(newpassword.matches(regexp)) {
-					  String encryptPassword=PasswordSecure.encrypt(admin.getPass());
+					  String encryptPassword=PasswordSecure.encrypt(newpassword);
 					  adminrepo.changePassword(admindetails.getId(),encryptPassword);
 					  model.addAttribute("msg","Admin Password Changed Succuessfully...");
 					  

@@ -44,8 +44,8 @@
   </head>
   <body>
    <div class="container p-5">
-      <h1 class="text-center text-white fw-bold">STUDENT INFORMATION</h1>
-    <br><br><br>
+      <h4 class="text-center text-white fw-bold">STUDENT INFORMATION</h4>
+    <br>
     <div class="text-center mx-auto">
         <div  th:if="${msg}" class="fw-bold alert alert-warning alert-dismissible fade show" role="alert">
             <p th:text="${msg}" class="text-primary text-center"></p>
@@ -71,6 +71,7 @@
                   <th>Student DOB</th>
                   <th>Course Id</th>
                   <th>Register Time</th>
+                  <th>PDF</th>
                   <th>Action</th>
                   <th>Action</th>
                 </tr>
@@ -87,6 +88,9 @@
                   <td th:text="${student.dob}"></td>
                   <td th:text="${student.course.id}"></td>
                   <td th:text="${student.time}"></td>
+                  <td>
+                     <a type="button" th:href="@{/studentpdf/{id}(id=${student.id})}" class="btn btn-warning fw-bold">Student PDF</a>
+                  </td>
                   <td>
                     <a type="button" th:href="@{/editstudent/{id}(id=${student.id})}" class="btn btn-primary fw-bold"><i class="bi bi-pencil-square"></i>&nbsp;EDIT</a>
                   </td>
@@ -107,8 +111,8 @@
       
       
       
-      <a th:href="@{/getalladmin}" class="custom-button">GET ALL ADMIN</a>
-      <a th:href="@{/pdf}" class="custom-button">Student PDF</a>
+      
+      
     
    </div>
     

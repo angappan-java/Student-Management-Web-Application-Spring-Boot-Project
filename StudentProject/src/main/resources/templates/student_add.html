@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student SpringBoot Project</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-     
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">    
      <script>
           function previewImage(event){
            var reader=new FileReader();
@@ -64,8 +64,8 @@
     
     <div class="container my-4" >
         <div class="row" >
-            <div class="col-md-8 mx-auto rounded border p-4" style="background-color:white">
-            <h2 class="text-center mb-3">Add Student</h2>
+         <div class="form-control mx-auto rounded border p-4 w-50" style="background-color:white">
+            <h4 class="text-center text-primary fw-bold">Student Register</h4>
               <form th:action="@{/addstudent}" method="post" th:object="${student}" enctype="multipart/form-data">
                  <div class="row mb-3">
                    <label class="col-sm-4 col-form-label fw-bold">Student Id</label>
@@ -94,9 +94,7 @@
                                    th:errorClass="text-danger"
                                    th:errors="${student.age}"></p>
                         </div>
-                  </div>
-   
-                  
+                  </div>            
    
                   <div class="row mb-3">
                    <label class="col-sm-4 col-form-label fw-bold">Gender</label>
@@ -112,8 +110,7 @@
                                    th:errors="${student.gender}"></p>
                         </div>
                   </div> 
-                  
-                  
+                                   
                   <div class="row mb-3">
                    <label class="col-sm-4 col-form-label fw-bold">Date Of Birth</label>
                       <div class="col-sm-8">
@@ -123,8 +120,7 @@
                                    th:errors="${student.dob}"></p>
                         </div>
                   </div>
-                  
-                          
+                                            
                   <div class="row mb-3">
                    <label class="col-sm-4 col-form-label fw-bold">Time</label>
                       <div class="col-sm-8">
@@ -160,29 +156,19 @@
                                    th:errors="${course.id}"></p>
                         </div>
                   </div>
-                  
-                   
-             
-                       
+                                     
               <div class="row">
-                    <div class="offset-sm-4 col-sm-8 d-grid" >
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div> 
-              </div><br><br>
-              <div class="row">
-                    <div class="offset-sm-4 col-sm-8 d-grid">
-                        <a class="btn btn-success" th:href="@{/editstudent}">Search Student</a>
+                    <div class="offset-md-4 col-md-4 d-grid" >
+                        <button type="submit" class="btn btn-primary fw-bold">ADD</button>
                     </div>
-              </div> 
-                 
-                             
-          </form>
-          
-         </div>
-                    
+                    <div class="col-md-4 d-grid">
+                        <a type="button" class="btn btn-success fw-bold" th:href="@{/student}">BACK</a>
+                    </div> 
+              </div>             
+          </form>         
+         </div>                   
         </div>
-    </div>
-    
+    </div>   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
 </html>

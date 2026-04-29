@@ -167,19 +167,15 @@ public class StudentController {
 	    	}
 	    }
 	    
-	    @GetMapping("/pdf")
-	    public String studentpdf() {
-	    	return "studentpdf";
-	    }
-	    @GetMapping("/studentpdf")
-	    public String pdf(@RequestParam("id") String id,
+	    @GetMapping("/studentpdf/{id}")
+	    public String pdf(@PathVariable("id") String id,
 	    		HttpServletResponse response,Model model) throws DocumentException, IOException {
 	    	
 	    	Student stu=studentrepo.getbyid(id);
 	    	
 	    	if(stu==null) {
 	    		model.addAttribute("err","This Student Id["+id+"] Is Not Found");
-	    		return "studentpdf";
+	    		return "student";
 	    	}
 	    	
 	    	response.setContentType("application/pdf");
@@ -227,12 +223,10 @@ public class StudentController {
 	        document.add(new Paragraph("\n"));
 	        document.add(new Paragraph("-----------------Thank You---------------"));
 	        document.close();
-	        model.addAttribute("msg", " Student Pdf Generated SuccesFully");
+	        model.addAttribute("msg", "Student Pdf Generated SuccesFully");
 	        
 	        
-	    	
-	        
-	        return "studentpdf";
+	        return "student";
 	        
 	    }
 	   
